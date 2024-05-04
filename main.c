@@ -21,7 +21,7 @@ int main(void){
 	
 	SpaceShip *ship = initSpaceShip(
 	        LoadTexture("./asset/spaceship.png"),
-	        { (float)screenWidth / 2, (float)screenHeight / 2 },
+	        { (float)screenWidth / 2, (float)screenHeight / 2 },//the centre of the screen 
 	        SPACE_SHIP_RAY
 	);
 	
@@ -46,9 +46,7 @@ int main(void){
 
 		//------------  End Drawing ------//
 		ClearBackground(BLACK);
-		EndDrawing();		
-
-		
+		EndDrawing();				
 	}
 	
 	//--------   De-Initialization --------//
