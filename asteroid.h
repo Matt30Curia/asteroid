@@ -22,18 +22,14 @@ typedef struct {
 } Asteroid ;
 
 
-typedef struct {
-
-    Vector2(*positionFunc)(void);
-    Vector2(*directionFunc)(void);
-
-} SideSpawnFuncs ;
-
-
 
 Asteroid* initAsteroid(Vector2 position, Vector2 direction, AsteroidSize size, bool isDestroyed);
 
+
+
 //------------------ IMPLEMENTED FUNCTION -------------------//
+
+
 
 float Clip(float value, float lower, float upper) {
     return fmin(upper, fmax(value, lower));
@@ -64,7 +60,7 @@ float* randomAngleSteps(int steps, float irregularity) {
 }
 
 
-Asteroid* initAsteroid(Vector2 position, Vector2 direction, asteroid Size size, bool isDestroyed) {
+Asteroid* initAsteroid(Vector2 position, Vector2 direction, AsteroidSize size, bool isDestroyed) {
 
     float avg_radius = (float)size;
     float irregularity = 0;
@@ -81,8 +77,9 @@ Asteroid* initAsteroid(Vector2 position, Vector2 direction, asteroid Size size, 
 
     if (points == NULL) {
         puts("allocation error from initAsteroid");
-        return{};
-    }
+        return nullptr;
+	}
+	
     // now generate the points
     float angle = GetRandomValue(0, 360) * DEG2RAD;
     for (int i = 0; i < EDGES_SIZE; i++) {
@@ -98,9 +95,11 @@ Asteroid* initAsteroid(Vector2 position, Vector2 direction, asteroid Size size, 
 
 	astTmp->position = position;
 	astTmp->direction = direction;
-	astTmp->ray = size
+	astTmp->ray = size;
+	astTmp->isDestroyed = isDestroyed;
+	astTmp->edges = points;
     
-    return asteroid{ position, direction, size, isDestroyed, points};
+    return astTmp;
 }
 
 #endif 
