@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "raylib.h"
 #include "raymath.h"
 
 #include "space_ship.h"
@@ -9,7 +10,7 @@
 #define screenHeight 800
 #define screenWidth  800
 
-#define MAX_LARGE_ASTEROIDS 12 //at the end there are 4 times small asteroids
+#define MAX_ASTEROIDS_SIZE 12 //at the end there are 4 times small asteroids
 #define SPACE_SHIP_RAY 50
 
 int main(void){
@@ -17,7 +18,7 @@ int main(void){
 	//----------   init variable -------//
 	InitWindow(screenHeight, screenWidth, "Asteroid");
 
-	AsteroidsContainer *asteroidsContainer = initAsteroids(MAX_LARGE_ASTEROIDS)
+	AsteroidsContainer *asteroidsContainer = initAsteroids(MAX_ASTEROIDS_SIZE)
 	
 	SpaceShip *ship = initSpaceShip(
 	        LoadTexture("./asset/spaceship.png"),

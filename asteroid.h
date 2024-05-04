@@ -24,8 +24,8 @@ typedef struct {
 
 
 Asteroid* initAsteroid(Vector2 position, Vector2 direction, AsteroidSize size, bool isDestroyed);
-
-
+void destroyAsteroid(Asteroid* asteroid);
+void resetEdges(Asteroid* asteroid, Vector2 oldPosition, Vector2 newPosition);
 
 //------------------ IMPLEMENTED FUNCTION -------------------//
 
@@ -76,7 +76,7 @@ Asteroid* initAsteroid(Vector2 position, Vector2 direction, AsteroidSize size, b
 
 
     if (points == NULL) {
-        puts("allocation error from initAsteroid");
+        puts("allocation failed from initAsteroid");
         return nullptr;
 	}
 	
@@ -100,6 +100,18 @@ Asteroid* initAsteroid(Vector2 position, Vector2 direction, AsteroidSize size, b
 	astTmp->edges = points;
     
     return astTmp;
+}
+
+void destroyAsteroid(Asteroid* asteroid) {
+    asteroid->isDestroyed = true;
+}
+
+void resetEdges(asteroid* asteroid, Vector2 oldPosition, Vector2 newPosition) {
+    for (int i = 0; i < EDGES_SIZE; i++) {
+        asteroid->edges[i] = Vector2Subtract(asteroid->edges[i], oldPosition);
+        asteroid->edges[i] = Vector2Add(asteroid->edges[i], newPosition);
+    }
+
 }
 
 #endif 
