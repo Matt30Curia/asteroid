@@ -1,23 +1,6 @@
-#ifndef SPACESHIP_H 
-#define SPACESHIP_H
+#include "../includes/spaceship.h"
 
-#include "asteroid/bullet.h"
-
-#define TIMER 0.7f
-#define MAX_BULLET 15
-
-typedef struct  {
-    Texture2D texture;
-    Vector2 position;
-    Vector2 velocity;
-    Queue bullets;
-
-    int rotation;
-    float cooldown;
-
-    int ray;
-} SpaceShip ;
-
+ 
 SpaceShip* initSpaceShip(Texture2D texture, Vector2 pos, int ray) {
 
     Queue bullet;
@@ -159,5 +142,3 @@ void drawSpaceShip(const SpaceShip* space_ship) {
     DrawTexturePro(space_ship->texture, source, dest, origin, space_ship->rotation, WHITE);
 
 }
-
-#endif 
