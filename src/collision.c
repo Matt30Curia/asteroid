@@ -1,3 +1,5 @@
+#include "../includes/collision.h"
+
 
 bool asteroidCollide(SpaceShip* spaceship, const Asteroid* asteroid){
 
@@ -24,8 +26,8 @@ bool asteroidCollide(SpaceShip* spaceship, const Asteroid* asteroid){
 
 bool collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer) {
 
-    asteroid* asteroid = asteroidContainer->asteroids;
-    int num = asteroidContainer->total_size;
+    Asteroid* asteroid = asteroidContainer->asteroids;
+    int num = asteroidContainer->max_size;
 
     float distance;
 
@@ -53,3 +55,4 @@ bool collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer) {
 
     }
     return false;
+}

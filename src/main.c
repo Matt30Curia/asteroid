@@ -3,6 +3,7 @@
 #include "../includes/spaceship.h"
 #include "../includes/asteroid.h"
 #include "../includes/asteroid_container.h"
+#include "../includes/collision.h"
 
 #define screenHeight 800
 #define screenWidth  800
@@ -36,7 +37,7 @@ int main(void){
 		//-------------  Update  -----------//
 		updateSpaceShip(ship);
 		updateAsteroids(asteroidsContainer);
-		//collide(ship, asteroidsContainer);
+		collide(ship, asteroidsContainer);
 
 		//------------  Drawing  ----------//
 		BeginDrawing();
