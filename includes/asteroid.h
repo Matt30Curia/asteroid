@@ -2,6 +2,11 @@
 #define ASTEROID_H
 
 #include "raylib.h"
+#include "raymath.h"
+#include "math.h"
+#include "stdlib.h"
+#include "stdio.h"
+
 #define EDGES_SIZE 8
 
 enum AsteroidSize {
@@ -10,6 +15,7 @@ enum AsteroidSize {
 
 
 typedef struct {
+    Texture2D texture;
 
     Vector2 position;
     Vector2 direction;
@@ -22,11 +28,9 @@ typedef struct {
 } Asteroid ;
 
 
-
-Asteroid* initAsteroid(Vector2 position, Vector2 direction, AsteroidSize size, bool isDestroyed);
+Asteroid* initAsteroid(Vector2 position, Vector2 direction, int size, bool isDestroyed);
 void destroyAsteroid(Asteroid* asteroid);
 void resetEdges(Asteroid* asteroid, Vector2 oldPosition, Vector2 newPosition);
-
 
 
 #endif 

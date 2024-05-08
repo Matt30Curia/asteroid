@@ -1,20 +1,20 @@
 #include "../includes/asteroid_container.h"
 
-typedef struct SideSpawnFuncs {
+typedef struct{
     Vector2(*positionFunc)(void);
     Vector2(*directionFunc)(void);
-};
+}  SideSpawnFuncs;
 
 
-Vector2 positionFuncTop(void)   { return { (float)GetRandomValue(0, SCREEN_HEIGHT + ZERO_OFFSET), -50 }; }
-Vector2 positionFuncLeft(void)  { return { -50, (float)GetRandomValue(0, SCREEN_WIDHT + ZERO_OFFSET), }; }
-Vector2 positionFuncRight(void) { return { (float)SCREEN_WIDHT + ZERO_OFFSET, (float)GetRandomValue(0, (float)SCREEN_HEIGHT + ZERO_OFFSET) }; }
-Vector2 positionFuncBottom(void){ return { (float)GetRandomValue(0, SCREEN_WIDHT + ZERO_OFFSET), (float)SCREEN_HEIGHT + ZERO_OFFSET }; }
+Vector2 positionFuncTop(void)   { return (Vector2){ (float)GetRandomValue(0, SCREEN_HEIGHT + ZERO_OFFSET), -50 }; }
+Vector2 positionFuncLeft(void)  { return (Vector2){ -50, (float)GetRandomValue(0, SCREEN_WIDHT + ZERO_OFFSET), }; }
+Vector2 positionFuncRight(void) { return (Vector2){ (float)SCREEN_WIDHT + ZERO_OFFSET, (float)GetRandomValue(0, (float)SCREEN_HEIGHT + ZERO_OFFSET) }; }
+Vector2 positionFuncBottom(void){ return (Vector2){ (float)GetRandomValue(0, SCREEN_WIDHT + ZERO_OFFSET), (float)SCREEN_HEIGHT + ZERO_OFFSET }; }
 
-Vector2 directionTop(void) { return { (float)GetRandomValue(-50, 50), (float)GetRandomValue(10, 50) }; }
-Vector2 directionBottom(void) { return { (float)GetRandomValue(-50, 50), (float)GetRandomValue(-50, -10) }; }
-Vector2 directionLeft(void) { return { (float)GetRandomValue(10, 50) , (float)GetRandomValue(-50, 50) }; }
-Vector2 directionRight(void) { return { (float)GetRandomValue(-50, -10) , (float)GetRandomValue(-50, 50) }; }
+Vector2 directionTop(void) { return (Vector2){ (float)GetRandomValue(-50, 50), (float)GetRandomValue(10, 50) }; }
+Vector2 directionBottom(void) { return (Vector2){ (float)GetRandomValue(-50, 50), (float)GetRandomValue(-50, -10) }; }
+Vector2 directionLeft(void) { return (Vector2){ (float)GetRandomValue(10, 50) , (float)GetRandomValue(-50, 50) }; }
+Vector2 directionRight(void) { return (Vector2){ (float)GetRandomValue(-50, -10) , (float)GetRandomValue(-50, 50) }; }
 
 SideSpawnFuncs sideFuncs[] = {
         { positionFuncTop, directionTop },
@@ -29,64 +29,64 @@ AsteroidContainer* createAsteroids(size_t size){
 
     Vector2 direction;
     Vector2 position;
-
-    Asteroid* asteroids = (Asteroid*)malloc(size * 4 * sizeof(Asteroid));
+    size_t max_size = size * 4;
+    Asteroid* asteroids = (Asteroid*)malloc(max_size * sizeof(Asteroid));
 
     // Check if memory allocation was successful
     if (asteroids == NULL) {
         printf("Memory allocation failed from createAsteroids\n");
-        return nullptr;
+        return NULL;
     }
 
 	int side; //give the screen size for asteroid spawn
 
-    for (int i = 0; i < numAsteroid; i++) {
+    for (int i = 0; i < max_size; i++) {
 
         side = GetRandomValue(0, 3);
         position  = sideFuncs[side].positionFunc();
         direction = sideFuncs[side].directionFunc();
 
-        if (i < num)
-            asteroids[i] = initAsteroid(position, Vector2Scale(direction, VELOCITY_ASTEROID), LARGE, false);
+        if (i < size)
+            asteroids[i] = *initAsteroid(position, Vector2Scale(direction, VELOCITY_ASTEROID), LARGE, false);
         else
-            asteroids[i] = initAsteroid(position, Vector2Scale(direction, VELOCITY_ASTEROID), LARGE, true);
+            asteroids[i] = *initAsteroid(position, Vector2Scale(direction, VELOCITY_ASTEROID), LARGE, true);
 
     }
 
     AsteroidContainer* containerTmp = (AsteroidContainer*)malloc(sizeof(AsteroidContainer));
 
 	containerTmp->asteroids = asteroids;
-	containerTmp->max_size = size * 4;
+	containerTmp->max_size = max_size;
 	containerTmp->current_index = size;
 
     return containerTmp;
 }
 
-void divideAsteroid(asteroidContainer* asteroidContainer, int collider) {
+void divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
 
     Vector2 initalPos = asteroidContainer->asteroids[collider].position;
     Vector2 direction;
-    asteroidContainer->curr_index += 1;
+    asteroidContainer->current_index += 1;
 
-    if (asteroidContainer->curr_index < asteroidContainer->total_size){
+    if (asteroidContainer->current_index < asteroidContainer->max_size){
 
        if (asteroidContainer->asteroids[collider].ray == LARGE) {
 
           direction = Vector2Scale(sideFuncs[GetRandomValue(0, 3)].directionFunc(), VELOCITY_ASTEROID ) ;
-          asteroidContainer->asteroids[asteroidContainer->curr_index] = initAsteroid(initalPos, direction, MEDIUM, false);
+          asteroidContainer->asteroids[asteroidContainer->current_index] = *initAsteroid(initalPos, direction, MEDIUM, false);
 
           direction = Vector2Scale(direction, -1);
-          asteroidContainer->asteroids[collider] = initAsteroid( initalPos, direction, MEDIUM, false);
+          asteroidContainer->asteroids[collider] = *initAsteroid( initalPos, direction, MEDIUM, false);
 
        }
 
        else if (asteroidContainer->asteroids[collider].ray == MEDIUM) {
 
           direction = Vector2Scale(sideFuncs[GetRandomValue(0, 3)].directionFunc(), VELOCITY_ASTEROID );
-          asteroidContainer->asteroids[collider] = initAsteroid(initalPos, direction, SMALL, false);
+          asteroidContainer->asteroids[collider] = *initAsteroid(initalPos, direction, SMALL, false);
 
           direction = Vector2Scale(direction, -1);
-          asteroidContainer->asteroids[asteroidContainer->curr_index] =  initAsteroid(initalPos, direction, SMALL, false);
+          asteroidContainer->asteroids[asteroidContainer->current_index] =  *initAsteroid(initalPos, direction, SMALL, false);
        }
 
     }
@@ -133,7 +133,7 @@ void updateAsteroids(AsteroidContainer* asteroidContainer) {
 }
 
 
-void DrawAsteroids(AsteroidContainer* asteroidContainer)
+void drawAsteroids(AsteroidContainer* asteroidContainer)
 {
     Asteroid* asteroid = asteroidContainer->asteroids;
 
@@ -152,3 +152,7 @@ void DrawAsteroids(AsteroidContainer* asteroidContainer)
 }
 
 
+void freeAsteroids(AsteroidContainer* asteroids) {
+
+    free(asteroids);
+}

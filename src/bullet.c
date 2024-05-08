@@ -6,6 +6,8 @@ void initQueue(Queue* queue) {
     for (int i = 0; i < BULLET_SIZE; i++) {
         queue->items[i] = bullet;
     }
+    queue->head = -1;
+    queue->tail = -1;
 
 }
 
@@ -36,10 +38,10 @@ bool enQueue(Queue* queue, Bullet* element) {
 // Removing an element
 Bullet* deQueue(Queue* queue) {
 
-
+    void* a;
     if (isEmpty(queue)) {
 
-        return {};
+        return a;
     }
     else {
         Bullet* element;

@@ -1,11 +1,8 @@
 #include "raylib.h"
-#include "raylib.h"
-#include "raymath.h"
 
-#include "space_ship.h"
-#include "asteroids.h"
-#include "collisions.h"
-
+#include "../includes/spaceship.h"
+#include "../includes/asteroid.h"
+#include "../includes/asteroid_container.h"
 
 #define screenHeight 800
 #define screenWidth  800
@@ -18,11 +15,13 @@ int main(void){
 	//----------   init variable -------//
 	InitWindow(screenHeight, screenWidth, "Asteroid");
 
-	AsteroidsContainer *asteroidsContainer = initAsteroids(MAX_ASTEROIDS_SIZE)
+	AsteroidContainer *asteroidsContainer = createAsteroids(MAX_ASTEROIDS_SIZE);
 	
-	SpaceShip *ship = initSpaceShip(
+	SpaceShip *ship = (SpaceShip*)malloc(sizeof(Asteroid*));
+
+	ship = initSpaceShip(
 	        LoadTexture("./asset/spaceship.png"),
-	        { (float)screenWidth / 2, (float)screenHeight / 2 },//the centre of the screen 
+			(Vector2){ (float)screenWidth / 2, (float)screenHeight / 2 },//the centre of the screen
 	        SPACE_SHIP_RAY
 	);
 	
@@ -36,13 +35,13 @@ int main(void){
 	{
 		//-------------  Update  -----------//
 		updateSpaceShip(ship);
-		updateSpaceShip(asteroidsContainer);
-		collide(ship, asteroidsContainer);
+		updateAsteroids(asteroidsContainer);
+		//collide(ship, asteroidsContainer);
 
 		//------------  Drawing  ----------//
 		BeginDrawing();
-		DrawAsteroid(asteroidsContainer);
-		DrawSpaceShip(ship);
+		drawAsteroids(asteroidsContainer);
+		drawSpaceShip(ship);
 
 
 		//------------  End Drawing ------//
@@ -53,8 +52,8 @@ int main(void){
 	//--------   De-Initialization --------//
 	
 	CloseWindow(); // Close window and OpenGL context
-	UnloadSpaceShip(ship);
-	UnloadAsteroids(asteroidsContainer);
+	//unloadSpaceship(ship);
+	freeAsteroids(asteroidsContainer);
 
 
 	return 0;

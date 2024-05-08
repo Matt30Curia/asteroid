@@ -23,10 +23,10 @@ typedef struct {
 
 
 AsteroidContainer* createAsteroids(size_t size);
-void divideAsteroid(asteroidContainer* asteroidContainer, int collider);
+void divideAsteroid(AsteroidContainer* asteroidContainer, int collider);
 void updateAsteroids(AsteroidContainer* asteroidContainer);
-void DrawAsteroids(AsteroidContainer* asteroidContainer);
-
+void drawAsteroids(AsteroidContainer* asteroidContainer);
+void freeAsteroids(AsteroidContainer* asteroidContainer);
 
 
 

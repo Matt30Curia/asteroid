@@ -1,21 +1,24 @@
 #ifndef BULLET_H
 #define BULLET_H
 
+#include "raymath.h"
+#include <stdbool.h>
+
 #define BULLET_SIZE 15
 
 
-typedef struct Bullet {
+typedef struct {
     Vector2 position ;
     Vector2 direction;
-    bool isActive = false; // Aggiunto un flag per indicare se il proiettile è attivo o meno
-};
+    bool isActive; // Aggiunto un flag per indicare se il proiettile è attivo o meno
+} Bullet ;
 
 
-typedef struct Queue {
-    int head = -1;  
-    int tail = -1;
+typedef struct  {
+    int head ;
+    int tail ;
     Bullet items[BULLET_SIZE];
-};
+} Queue;
 
 
 void initQueue(Queue* queue);

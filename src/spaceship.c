@@ -3,11 +3,20 @@
  
 SpaceShip* initSpaceShip(Texture2D texture, Vector2 pos, int ray) {
 
-    Queue bullet;
-    initQueue(&bullet);
-    return spaceShip{
-        texture, pos,{},bullet, 0, TIMER, ray
-    };
+    Queue bullets;
+    initQueue(&bullets);
+
+    SpaceShip *s = (SpaceShip *)malloc(sizeof(SpaceShip));
+
+    s->texture = texture;
+    s->position = pos;
+    s->velocity = (Vector2){0,0};
+    s->bullets = bullets;
+    s->rotation = 0;
+    s->cooldown = TIMER;
+    s->ray = ray;
+
+    return s;
 }
 
 bool isEqual(
@@ -53,7 +62,7 @@ void updateBullet(SpaceShip* spaceship) {
         if (tempBullet.isActive) {
 
             velocity = Vector2Scale(tempBullet.direction, 10);
-            newBullet = { Vector2Add(tempBullet.position, velocity), tempBullet.direction, true };
+            newBullet = (Bullet){ Vector2Add(tempBullet.position, velocity), tempBullet.direction, true };
 
             spaceship->bullets.items[i] = newBullet;
 
@@ -141,4 +150,9 @@ void drawSpaceShip(const SpaceShip* space_ship) {
 
     DrawTexturePro(space_ship->texture, source, dest, origin, space_ship->rotation, WHITE);
 
+}
+
+
+void freeSpaceship(SpaceShip* space_ship){
+    UnloadTexture(space_ship->texture);
 }

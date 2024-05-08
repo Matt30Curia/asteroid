@@ -30,7 +30,7 @@ float* randomAngleSteps(int steps, float irregularity) {
 }
 
 
-Asteroid* initAsteroid(Vector2 position, Vector2 direction, AsteroidSize size, bool isDestroyed) {
+Asteroid* initAsteroid(Vector2 position, Vector2 direction, int size, bool isDestroyed) {
 
     float avg_radius = (float)size;
     float irregularity = 0;
@@ -46,8 +46,8 @@ Asteroid* initAsteroid(Vector2 position, Vector2 direction, AsteroidSize size, b
 
 
     if (points == NULL) {
-        puts("allocation failed from initAsteroid");
-        return nullptr;
+        printf("allocation failed from initAsteroid");
+        return NULL;
 	}
 
     // now generate the points
@@ -76,7 +76,7 @@ void destroyAsteroid(Asteroid* asteroid) {
     asteroid->isDestroyed = true;
 }
 
-void resetEdges(asteroid* asteroid, Vector2 oldPosition, Vector2 newPosition) {
+void resetEdges(Asteroid* asteroid, Vector2 oldPosition, Vector2 newPosition) {
     for (int i = 0; i < EDGES_SIZE; i++) {
         asteroid->edges[i] = Vector2Subtract(asteroid->edges[i], oldPosition);
         asteroid->edges[i] = Vector2Add(asteroid->edges[i], newPosition);
