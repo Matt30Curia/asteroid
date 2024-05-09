@@ -3,8 +3,9 @@
 
 #include "raymath.h"
 #include <stdbool.h>
-
-#define BULLET_SIZE 15
+#include <stdlib.h>
+#include <stdio.h>
+#include <stddef.h>
 
 
 typedef struct {
@@ -17,11 +18,14 @@ typedef struct {
 typedef struct  {
     int head ;
     int tail ;
-    Bullet items[BULLET_SIZE];
+
+    size_t size;
+
+    Bullet* items;
 } Queue;
 
 
-void initQueue(Queue* queue);
+void initQueue(Queue* queue, size_t size);
 bool enQueue(Queue* queue, Bullet* element);
 Bullet* deQueue(Queue* queue);
 

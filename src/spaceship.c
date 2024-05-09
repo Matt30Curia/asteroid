@@ -4,8 +4,7 @@
 SpaceShip* initSpaceShip(Texture2D texture, Vector2 pos, int ray) {
 
     Queue bullets;
-    initQueue(&bullets);
-
+    initQueue(&bullets, MAX_BULLET);
     SpaceShip *s = (SpaceShip *)malloc(sizeof(SpaceShip));
 
     s->texture = texture;
@@ -17,21 +16,6 @@ SpaceShip* initSpaceShip(Texture2D texture, Vector2 pos, int ray) {
     s->ray = ray;
 
     return s;
-}
-
-bool isEqual(
-    double a,           // primo double da comparare
-    double b,           // secondo double da comparare
-    double myepsilon)   // un numero piccolo per riferimento di comparazione
-{
-    if (islessequal(
-        fabs(a - b),
-        myepsilon * (isgreater(fabs(a), fabs(b)) ? fabs(a) : fabs(b)))) {
-        // se sono (approssimativamente) uguali ritorna true
-        return true;
-    }
-    // se sono (approssimativamente) diversi ritorna false
-    return false;
 }
 
 
@@ -67,8 +51,8 @@ void updateBullet(SpaceShip* spaceship) {
             spaceship->bullets.items[i] = newBullet;
 
             // Controllo se il proiettile è uscito dai limiti dello schermo
-            if (newBullet.position.x > 800 || newBullet.position.y > 800 || newBullet.position.x < 0 || newBullet.position.y < 0) {
-
+            if ((newBullet.position.x > 800 || newBullet.position.y > 800 || newBullet.position.x < 0 || newBullet.position.y < 0 )&& !tempBullet.isActive) {
+                printf("x: %f, y: %f\n", newBullet.position.x, newBullet.position.y);
                 tempBullet.isActive = false; // Imposto il flag isActive su false
                 deQueue(&spaceship->bullets);
             }
@@ -153,6 +137,6 @@ void drawSpaceShip(const SpaceShip* space_ship) {
 }
 
 
-void freeSpaceship(SpaceShip* space_ship){
+void unloadSpaceship(SpaceShip* space_ship){
     UnloadTexture(space_ship->texture);
 }

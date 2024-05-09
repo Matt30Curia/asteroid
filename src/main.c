@@ -11,6 +11,10 @@
 #define MAX_ASTEROIDS_SIZE 12 //at the end there are 4 times small asteroids
 #define SPACE_SHIP_RAY 50
 
+//TODO  AND BULLET VELOCITY ARE SYNC WHITH FRAME TIME
+//TODO MENU' AND GAMEOVER SCREEN
+//TODO MAKE NAMING CONSISTENT
+
 int main(void){
 
 	//----------   init variable -------//
@@ -35,9 +39,10 @@ int main(void){
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
 		//-------------  Update  -----------//
+		collide(ship, asteroidsContainer);
 		updateSpaceShip(ship);
 		updateAsteroids(asteroidsContainer);
-		collide(ship, asteroidsContainer);
+
 
 		//------------  Drawing  ----------//
 		BeginDrawing();
@@ -53,7 +58,7 @@ int main(void){
 	//--------   De-Initialization --------//
 	
 	CloseWindow(); // Close window and OpenGL context
-	//unloadSpaceship(ship);
+	unloadSpaceship(ship);
 	freeAsteroids(asteroidsContainer);
 
 

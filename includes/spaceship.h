@@ -1,4 +1,4 @@
-#ifndef SPACESHIP_H 
+#ifndef SPACESHIP_H
 #define SPACESHIP_H
 
 #include "raylib.h"

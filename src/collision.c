@@ -6,7 +6,7 @@ bool asteroidCollide(SpaceShip* spaceship, const Asteroid* asteroid){
     float distance;
     Bullet tempBullet;
 
-    for (int i = 0; i < BULLET_SIZE; i++) {
+    for (int i = 0; i < spaceship->bullets.size; i++) {
         tempBullet = spaceship->bullets.items[i];
 
         if (tempBullet.isActive) {

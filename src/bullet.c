@@ -1,19 +1,25 @@
 #include "../includes/bullet.h"
 
-void initQueue(Queue* queue) {
 
-    Bullet bullet = {};
-    for (int i = 0; i < BULLET_SIZE; i++) {
-        queue->items[i] = bullet;
+void initQueue(Queue* queue, size_t size) {
+    queue->size = size - 1;
+    Bullet *bullet = (Bullet*)malloc(sizeof(Bullet));
+
+    queue->items = (Bullet*)malloc(sizeof(Bullet) * size);
+
+    for (int i = 0; i < queue->size; i++) {
+        queue->items[i] = *bullet;
+
     }
     queue->head = -1;
     queue->tail = -1;
+
 
 }
 
 // Check if the queue is full
 bool isFull(Queue* queue) {
-    if ((queue->head == queue->tail + 1) || (queue->head == 0 && queue->tail == BULLET_SIZE - 1)) return true;
+    if ((queue->head == queue->tail + 1) || (queue->head == 0 && queue->tail == queue->size - 1)) return true;
     return false;
 }
 
@@ -25,11 +31,13 @@ bool isEmpty(Queue* queue) {
 
 // Adding an element
 bool enQueue(Queue* queue, Bullet* element) {
+    printf("aggiunto\n");
     if (isFull(queue))
         return false;
     else {
+
         if (queue->head == -1) queue->head = 0;
-        queue->tail = (queue->tail + 1) % BULLET_SIZE;
+        queue->tail = (queue->tail + 1) % queue->size;
         queue->items[queue->tail] = *element;
 
     }
@@ -37,14 +45,13 @@ bool enQueue(Queue* queue, Bullet* element) {
 
 // Removing an element
 Bullet* deQueue(Queue* queue) {
-
-    void* a;
+    printf("tolto\n");
+    Bullet* element = (Bullet*)malloc(sizeof(Bullet));
     if (isEmpty(queue)) {
 
-        return a;
+        return element;
     }
     else {
-        Bullet* element;
         element = &queue->items[queue->head];
 
         if (queue->head == queue->tail) {
@@ -53,7 +60,7 @@ Bullet* deQueue(Queue* queue) {
         }
 
         else {
-            queue->head = (queue->head + 1) % BULLET_SIZE;
+            queue->head = (queue->head + 1) % queue->size;
         }
 
         return (element);
