@@ -44,17 +44,19 @@ void updateBullet(SpaceShip* spaceship) {
         tempBullet = spaceship->bullets.items[i];
 
         if (tempBullet.isActive) {
-
-            velocity = Vector2Scale(tempBullet.direction, 10);
+            printf("TOLGO %d\n", tempBullet.isActive);
+            velocity = Vector2Scale(tempBullet.direction, 10);//add define for velocity
             newBullet = (Bullet){ Vector2Add(tempBullet.position, velocity), tempBullet.direction, true };
 
             spaceship->bullets.items[i] = newBullet;
 
             // Controllo se il proiettile è uscito dai limiti dello schermo
-            if ((newBullet.position.x > 800 || newBullet.position.y > 800 || newBullet.position.x < 0 || newBullet.position.y < 0 )&& !tempBullet.isActive) {
-                printf("x: %f, y: %f\n", newBullet.position.x, newBullet.position.y);
-                tempBullet.isActive = false; // Imposto il flag isActive su false
-                deQueue(&spaceship->bullets);
+            if ((newBullet.position.x > 800 || newBullet.position.y > 800 || newBullet.position.x < 0 || newBullet.position.y < 0 )) {
+
+
+                    spaceship->bullets.items[i].isActive = false;
+                    deQueue(&spaceship->bullets);
+
             }
 
         }
@@ -74,7 +76,7 @@ void drawBullet(SpaceShip* spaceship) {
         if (tempBullet.isActive) { // Di segno solo i proiettili attivi
 
             position = tempBullet.position;
-            finalPosition = Vector2Add(position, Vector2Scale(tempBullet.direction, 20));
+            finalPosition = Vector2Add(position, Vector2Scale(tempBullet.direction, 20));//bullet dimension
 
             DrawLineV(position, finalPosition, WHITE);
         }

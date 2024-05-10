@@ -4,6 +4,7 @@
 void initQueue(Queue* queue, size_t size) {
     queue->size = size - 1;
     Bullet *bullet = (Bullet*)malloc(sizeof(Bullet));
+    bullet->isActive = false;
 
     queue->items = (Bullet*)malloc(sizeof(Bullet) * size);
 
