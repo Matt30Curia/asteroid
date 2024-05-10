@@ -14,6 +14,8 @@ SpaceShip* initSpaceShip(Texture2D texture, Vector2 pos, int ray) {
     s->rotation = 0;
     s->cooldown = TIMER;
     s->ray = ray;
+    s->laser = LoadSound("./asset/laser.ogg");
+    s->engine = LoadSound("./asset/engine.ogg");
 
     return s;
 }
@@ -26,7 +28,7 @@ void addBullet(SpaceShip* spaceship, Vector2 direction, bool isKeyDown) {
         Vector2 updatedPosition = Vector2Add(direction, spaceship->position);
         Bullet newbullet = { updatedPosition, direction, true };
         enQueue(&spaceship->bullets, &newbullet);
-
+        PlaySound(spaceship->laser);
         spaceship->cooldown = TIMER;
 
     }
@@ -92,6 +94,7 @@ void updateSpaceShip(SpaceShip* space_ship)
     // rotazione
     if (IsKeyDown(KEY_RIGHT)) space_ship->rotation += 300.0f * GetFrameTime();
     if (IsKeyDown(KEY_LEFT))  space_ship->rotation -= 300.0f * GetFrameTime();
+    if (IsKeyDown(KEY_UP)) PlaySound(space_ship->engine);
 
     // Calcolo della direzione della navicella
     Vector2 direction = { cosf(space_ship->rotation * DEG2RAD), sinf(space_ship->rotation * DEG2RAD) };

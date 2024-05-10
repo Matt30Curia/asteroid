@@ -68,6 +68,7 @@ Asteroid* initAsteroid(Vector2 position, Vector2 direction, int size, bool isDes
 	astTmp->ray = size;
 	astTmp->isDestroyed = isDestroyed;
 	astTmp->edges = points;
+    astTmp->explosion = LoadSound("./asset/explosion.ogg");
 
     return astTmp;
 }

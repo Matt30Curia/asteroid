@@ -69,6 +69,7 @@ void divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
     asteroidContainer->current_index += 1;
 
     if (asteroidContainer->current_index < asteroidContainer->max_size){
+        PlaySound(asteroidContainer->asteroids[collider].explosion);
 
        if (asteroidContainer->asteroids[collider].ray == LARGE) {
 

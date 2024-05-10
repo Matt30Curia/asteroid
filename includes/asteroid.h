@@ -15,7 +15,7 @@ enum AsteroidSize {
 
 
 typedef struct {
-    Texture2D texture;
+    Sound explosion;
 
     Vector2 position;
     Vector2 direction;
@@ -24,6 +24,7 @@ typedef struct {
     bool isDestroyed;
 
     Vector2* edges;
+
 
 } Asteroid ;
 

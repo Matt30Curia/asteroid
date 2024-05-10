@@ -19,6 +19,7 @@ int main(void){
 
 	//----------   init variable -------//
 	InitWindow(screenHeight, screenWidth, "Asteroid");
+	InitAudioDevice();
 
 	AsteroidContainer *asteroidsContainer = createAsteroids(MAX_ASTEROIDS_SIZE);
 	
@@ -48,7 +49,7 @@ int main(void){
 		BeginDrawing();
 		drawAsteroids(asteroidsContainer);
 		drawSpaceShip(ship);
-
+		//DrawFPS(30,30);
 
 		//------------  End Drawing ------//
 		ClearBackground(BLACK);

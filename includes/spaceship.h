@@ -13,6 +13,9 @@ typedef struct  {
     Texture2D texture;
     Vector2 position;
     Vector2 velocity;
+    Sound laser;
+    Sound engine;
+
     Queue bullets;
 
     int rotation;
