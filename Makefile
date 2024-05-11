@@ -17,7 +17,7 @@ obj/%.o: src/%.c
 	$(CC) $(CFLAG) -c $< -o $@
 
 html:
-	emcc -o web/$(BIN).html $(SRCS) $(WFLAG) $(RAYLIB_PATH)/src -I $(RAYLIB_PATH)/src/external -L. -L $(RAYLIB_PATH)/src -s USE_GLFW=3 -s ASYNCIFY --preload-file asset/*.png web/libraylib.a
+	emcc -o web/$(BIN).html $(SRCS) $(WFLAG) $(RAYLIB_PATH)/src -I $(RAYLIB_PATH)/src/external -L. -L $(RAYLIB_PATH)/src -s USE_GLFW=3 -s ASYNCIFY --preload-file asset web/libraylib.a
 clean:
 	rm -f obj/*.o
 	rm -f web/*.html
