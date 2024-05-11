@@ -25,6 +25,8 @@ SideSpawnFuncs sideFuncs[] = {
 
 
 
+
+
 AsteroidContainer* createAsteroids(size_t size){
 
     Vector2 direction;
@@ -67,6 +69,7 @@ void divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
     Vector2 initalPos = asteroidContainer->asteroids[collider].position;
     Vector2 direction;
     asteroidContainer->current_index += 1;
+
 
     if (asteroidContainer->current_index < asteroidContainer->max_size){
         PlaySound(asteroidContainer->asteroids[collider].explosion);

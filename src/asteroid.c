@@ -1,5 +1,24 @@
 #include "../includes/asteroid.h"
 
+Sound explosion;
+
+Sound* loadSound() {
+    // Dichiarazione della variabile statica per tenere traccia dello stato di inizializzazione
+    static int initialized = 0;
+
+    // Controlla se il suono è già stato inizializzato
+    if (initialized == 0) {
+        // Se non è stato inizializzato, esegui l'inizializzazione
+        printf("Init suond...\n");
+        // Qui inserisci il codice per caricare effettivamente il suono
+        explosion = LoadSound("./asset/explosion.ogg");
+        // Imposta la variabile initialized a 1 per indicare che il suono è stato inizializzato
+        initialized = 1;
+    } else {
+        printf("sound initialized\n");
+    }
+    return &explosion;
+}
 
 float Clip(float value, float lower, float upper) {
     return fmin(upper, fmax(value, lower));
@@ -68,7 +87,7 @@ Asteroid* initAsteroid(Vector2 position, Vector2 direction, int size, bool isDes
 	astTmp->ray = size;
 	astTmp->isDestroyed = isDestroyed;
 	astTmp->edges = points;
-    astTmp->explosion = LoadSound("./asset/explosion.ogg");
+    astTmp->explosion = *loadSound();
 
     return astTmp;
 }

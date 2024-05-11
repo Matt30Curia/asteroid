@@ -6,7 +6,7 @@ SRCS = src/main.c src/bullet.c src/asteroid.c src/asteroid_container.c src/space
 WFLAG = -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces -Wunused-result -Os -I. -I
 RAYLIB_PATH = /home/dvx/Scrivania/raylib
 BIN = asteroid
-#
+
 
 all: $(BIN)
 
