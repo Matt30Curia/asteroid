@@ -17,8 +17,7 @@ obj/%.o: src/%.c
 	$(CC) $(CFLAG) -c $< -o $@
 
 html:
-	emcc -o web/$(BIN).html $(SRCS) $(WFLAG) $(RAYLIB_PATH)/src -I $(RAYLIB_PATH)/src/external -L. -L $(RAYLIB_PATH)/src -s USE_GLFW=3 -s ASYNCIFY -s TOTAL_MEMORY=67108864 -s FORCE_FILESYSTEM=1 --shell-file $(RAYLIB_PATH)/src/shell.html web/libraylib.a -DPLATFORM_WEB -s EXPORTED_RUNTIME_METHODS=ccall
-
+	emcc -o web/$(BIN).html $(SRCS) $(WFLAG) $(RAYLIB_PATH)/src -I $(RAYLIB_PATH)/src/external -L. -L $(RAYLIB_PATH)/src -s USE_GLFW=3 -s ASYNCIFY --preload-file asset/*.png web/libraylib.a
 clean:
 	rm -f obj/*.o
 	rm -f web/*.html
