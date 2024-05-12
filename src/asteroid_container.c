@@ -64,7 +64,7 @@ AsteroidContainer* createAsteroids(size_t size){
     return containerTmp;
 }
 
-void divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
+int divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
 
     Vector2 initalPos = asteroidContainer->asteroids[collider].position;
     Vector2 direction;
@@ -82,6 +82,8 @@ void divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
           direction = Vector2Scale(direction, -1);
           asteroidContainer->asteroids[collider] = *initAsteroid( initalPos, direction, MEDIUM, false);
 
+          return 20;
+
        }
 
        else if (asteroidContainer->asteroids[collider].ray == MEDIUM) {
@@ -91,9 +93,11 @@ void divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
 
           direction = Vector2Scale(direction, -1);
           asteroidContainer->asteroids[asteroidContainer->current_index] =  *initAsteroid(initalPos, direction, SMALL, false);
+          return 10;
        }
 
     }
+    return 0;
 
 }
 
@@ -115,7 +119,7 @@ void updateAsteroids(AsteroidContainer* asteroidContainer) {
             // Aggiorna le coordinate dei punti dell'asteroide
             asteroids[i].edges[j] = Vector2Add(direction, asteroids[i].edges[j]);
         }
-
+        // DrawCircleLinesV(asteroids[i].position, asteroids[i].ray, WHITE );!!!!!!!!!!!!!
         // Verifica se l'asteroide è uscito dai bordi della schermata
         if (asteroids[i].edges[EDGES_SIZE - 1].x > SCREEN_WIDHT  + ZERO_OFFSET ||
             asteroids[i].edges[EDGES_SIZE - 1].x < -ZERO_OFFSET ||

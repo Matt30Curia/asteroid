@@ -32,7 +32,7 @@ bool isEmpty(Queue* queue) {
 
 // Adding an element
 bool enQueue(Queue* queue, Bullet* element) {
-    printf("aggiunto\n");
+
     if (isFull(queue))
         return false;
     else {
@@ -46,7 +46,7 @@ bool enQueue(Queue* queue, Bullet* element) {
 
 // Removing an element
 Bullet* deQueue(Queue* queue) {
-    printf("tolto\n");
+
     Bullet* element = (Bullet*)malloc(sizeof(Bullet));
     if (isEmpty(queue)) {
 

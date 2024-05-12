@@ -24,29 +24,30 @@ bool asteroidCollide(SpaceShip* spaceship, const Asteroid* asteroid){
     return false;
 }
 
-bool collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer) {
+int collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer) {
 
     Asteroid* asteroid = asteroidContainer->asteroids;
-    int num = asteroidContainer->max_size;
+    int num = asteroidContainer->current_index;
 
     float distance;
 
     for (int i = 0; i < num; i++) {
-        distance = powf(spaceship->position.x - asteroid[i].position.x, 2) + pow(spaceship->position.y - asteroid[i].position.y, 2) + 50;
+        distance = powf(spaceship->position.x - asteroid[i].edges[7].x, 2) + pow(spaceship->position.y - asteroid[i].edges[7].y, 2) + 20;
         //space ship colllide
-        if (distance < powf(asteroid[i].ray, 2)){
-
-            return true;
+        if (CheckCollisionCircles(spaceship->position, 10, Vector2SubtractValue(asteroid[i].edges[7], asteroid[i].ray), asteroid[i].ray) ){
+            printf("game over");
+            return -1;
         }
 
         if (asteroidCollide(spaceship, &asteroid[i] )) {
             if (asteroid[i].ray == SMALL) {
 
                 destroyAsteroid(&asteroid[i]);
+
             }
-            if (asteroid[i].ray == LARGE || asteroid[i].ray == MEDIUM)
+            else
             {
-                divideAsteroid(asteroidContainer, i);
+                return divideAsteroid(asteroidContainer, i);
             }
 
 
@@ -54,5 +55,5 @@ bool collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer) {
         }
 
     }
-    return false;
+    return 0;
 }

@@ -8,12 +8,14 @@
 #define screenHeight 800
 #define screenWidth  800
 
-#define MAX_ASTEROIDS_SIZE 5 //at the end there are 4 times small asteroids
-#define SPACE_SHIP_RAY 50
+#define MAX_ASTEROIDS_SIZE 10 //at the end there are 4 times small asteroids
+#define SPACE_SHIP_RAY 30
 
-//TODO  AND BULLET VELOCITY ARE SYNC WHITH FRAME TIME
-//TODO MENU' AND GAMEOVER SCREEN
-//TODO MAKE NAMING CONSISTENT
+typedef struct {
+	int menu;
+	int wawe;
+
+} GameState;
 
 int main(void){
 
@@ -31,7 +33,7 @@ int main(void){
 	        SPACE_SHIP_RAY
 	);
 	
-	
+	GameState state = { 1, 1 };
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	
@@ -39,16 +41,26 @@ int main(void){
 	// Main game loop
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
-		//-------------  Update  -----------//
-		collide(ship, asteroidsContainer);
-		updateSpaceShip(ship);
 		updateAsteroids(asteroidsContainer);
+		if(state.menu){
+			DrawText("Asteroid", 240, 330, 70, WHITE);
+			DrawText("press C to start", 300, 400, 20, WHITE);
+			if(IsKeyPressed(KEY_C)) state.menu = 0;
+		}
+		//-------------  Update  -----------//
+		else{
+			printf("damage %d \n",collide(ship, asteroidsContainer));
+			updateSpaceShip(ship);
+			drawSpaceShip(ship);
+		}
+
+
 
 
 		//------------  Drawing  ----------//
 		BeginDrawing();
 		drawAsteroids(asteroidsContainer);
-		drawSpaceShip(ship);
+
 		//DrawFPS(30,30);
 
 		//------------  End Drawing ------//

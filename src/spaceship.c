@@ -46,7 +46,7 @@ void updateBullet(SpaceShip* spaceship) {
         tempBullet = spaceship->bullets.items[i];
 
         if (tempBullet.isActive) {
-            printf("TOLGO %d\n", tempBullet.isActive);
+
             velocity = Vector2Scale(tempBullet.direction, 10);//add define for velocity
             newBullet = (Bullet){ Vector2Add(tempBullet.position, velocity), tempBullet.direction, true };
 

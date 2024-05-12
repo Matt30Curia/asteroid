@@ -6,6 +6,6 @@
 #include "../includes/asteroid.h"
 #include "../includes/bullet.h"
 
-bool collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer);
+int collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer);
 
 #endif
