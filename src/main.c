@@ -8,7 +8,7 @@
 #define screenHeight 800
 #define screenWidth  800
 
-#define MAX_ASTEROIDS_SIZE 12 //at the end there are 4 times small asteroids
+#define MAX_ASTEROIDS_SIZE 5 //at the end there are 4 times small asteroids
 #define SPACE_SHIP_RAY 50
 
 //TODO  AND BULLET VELOCITY ARE SYNC WHITH FRAME TIME

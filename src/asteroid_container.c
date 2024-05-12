@@ -31,7 +31,7 @@ AsteroidContainer* createAsteroids(size_t size){
 
     Vector2 direction;
     Vector2 position;
-    size_t max_size = size * 4;
+    size_t max_size = size * 5;
     Asteroid* asteroids = (Asteroid*)malloc(max_size * sizeof(Asteroid));
 
     // Check if memory allocation was successful
@@ -76,7 +76,7 @@ void divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
 
        if (asteroidContainer->asteroids[collider].ray == LARGE) {
 
-          direction = Vector2Scale(sideFuncs[GetRandomValue(0, 3)].directionFunc(), VELOCITY_ASTEROID ) ;
+          direction = sideFuncs[GetRandomValue(0, 3)].directionFunc() ;
           asteroidContainer->asteroids[asteroidContainer->current_index] = *initAsteroid(initalPos, direction, MEDIUM, false);
 
           direction = Vector2Scale(direction, -1);
@@ -86,7 +86,7 @@ void divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
 
        else if (asteroidContainer->asteroids[collider].ray == MEDIUM) {
 
-          direction = Vector2Scale(sideFuncs[GetRandomValue(0, 3)].directionFunc(), VELOCITY_ASTEROID );
+          direction = sideFuncs[GetRandomValue(0, 3)].directionFunc();
           asteroidContainer->asteroids[collider] = *initAsteroid(initalPos, direction, SMALL, false);
 
           direction = Vector2Scale(direction, -1);

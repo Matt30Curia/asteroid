@@ -10,7 +10,7 @@
 #define EDGES_SIZE 8
 
 enum AsteroidSize {
-    SMALL = 10, MEDIUM = 30, LARGE = 50
+    SMALL = 40, MEDIUM = 30, LARGE = 50
 };
 
 
