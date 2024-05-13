@@ -8,7 +8,7 @@
 #define screenHeight 800
 #define screenWidth  800
 
-#define MAX_ASTEROIDS_SIZE 10 //at the end there are 4 times small asteroids
+int MAX_ASTEROIDS_SIZE =  3; //at the end there are 4 times small asteroids
 #define SPACE_SHIP_RAY 30
 
 typedef struct {
@@ -33,6 +33,9 @@ int main(void){
 	        SPACE_SHIP_RAY
 	);
 	
+	int score = 0;
+	int currScore = 0;
+	double timer = 1;
 	GameState state = { 1, 1 };
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -41,6 +44,7 @@ int main(void){
 	// Main game loop
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
+		currScore = collide(ship, asteroidsContainer);
 		updateAsteroids(asteroidsContainer);
 		if(state.menu){
 			DrawText("Asteroid", 240, 330, 70, WHITE);
@@ -48,22 +52,42 @@ int main(void){
 			if(IsKeyPressed(KEY_C)) state.menu = 0;
 		}
 		//-------------  Update  -----------//
+		else if(score >=  MAX_ASTEROIDS_SIZE /** 3 */* 10){
+			timer = -1000;
+			MAX_ASTEROIDS_SIZE += 3;
+			freeAsteroids(asteroidsContainer);
+			asteroidsContainer = createAsteroids(MAX_ASTEROIDS_SIZE);
+
+			score = 0;
+
+		}
+		else if(currScore <= -1){
+			DrawText("Game over", 200, 330, 70, WHITE);
+			DrawText("press C to restart", 280, 400, 20, WHITE);
+			score += currScore;
+			if(IsKeyPressed(KEY_C)){
+				MAX_ASTEROIDS_SIZE = 3;
+				freeAsteroids(asteroidsContainer);
+				asteroidsContainer = createAsteroids(MAX_ASTEROIDS_SIZE);
+
+				score = 0;
+			}
+		}
 		else{
-			printf("damage %d \n",collide(ship, asteroidsContainer));
+			score += currScore;
+			DrawText(TextFormat("score: %04i", score), 30, 30, 20, WHITE);
 			updateSpaceShip(ship);
 			drawSpaceShip(ship);
 		}
-
-
-
+		if(score == 0 && timer < 0 && timer > -2000) DrawText(TextFormat("Wawe: %i", (MAX_ASTEROIDS_SIZE / 3) - 1), 300, 330, 50, WHITE);
 
 		//------------  Drawing  ----------//
 		BeginDrawing();
 		drawAsteroids(asteroidsContainer);
 
 		//DrawFPS(30,30);
-
-		//------------  End Drawing ------//
+		timer += GetFrameTime(); ///timer
+		//-----	-------  End Drawing ------//
 		ClearBackground(BLACK);
 		EndDrawing();				
 	}
