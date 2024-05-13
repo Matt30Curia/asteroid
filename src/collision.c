@@ -34,7 +34,7 @@ int collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer) {
     for (int i = 0; i < num; i++) {
         distance = powf(spaceship->position.x - asteroid[i].edges[7].x, 2) + pow(spaceship->position.y - asteroid[i].edges[7].y, 2) + 20;
         //space ship colllide
-        if (CheckCollisionCircles(spaceship->position, 10, Vector2SubtractValue(asteroid[i].edges[7], asteroid[i].ray), asteroid[i].ray) ){
+        if (CheckCollisionCircles(spaceship->position, 10, Vector2SubtractValue(asteroid[i].edges[7], asteroid[i].ray), asteroid[i].ray) && !asteroid[i].isDestroyed ){
             printf("game over");
             return -1;
         }
