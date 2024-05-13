@@ -27,7 +27,7 @@ bool asteroidCollide(SpaceShip* spaceship, const Asteroid* asteroid){
 int collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer) {
 
     Asteroid* asteroid = asteroidContainer->asteroids;
-    int num = asteroidContainer->current_index;
+    int num = asteroidContainer->max_size;
 
     float distance;
 
