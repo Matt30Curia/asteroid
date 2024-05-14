@@ -53,7 +53,7 @@ int main(void){
 		}
 		//-------------  Update  -----------//
 		else if(score >=  MAX_ASTEROIDS_SIZE /** 3 */* 10){
-			timer = -1000;
+			timer = -1.2;
 			MAX_ASTEROIDS_SIZE += 3;
 			freeAsteroids(asteroidsContainer);
 			asteroidsContainer = createAsteroids(MAX_ASTEROIDS_SIZE);
@@ -61,10 +61,10 @@ int main(void){
 			score = 0;
 
 		}
-		else if(currScore <= -1){
+		else if(currScore <= -1 || score < 0){
 			DrawText("Game over", 200, 330, 70, WHITE);
 			DrawText("press C to restart", 280, 400, 20, WHITE);
-			score += currScore;
+			score = -1;
 			if(IsKeyPressed(KEY_C)){
 				MAX_ASTEROIDS_SIZE = 3;
 				freeAsteroids(asteroidsContainer);
@@ -79,7 +79,7 @@ int main(void){
 			updateSpaceShip(ship);
 			drawSpaceShip(ship);
 		}
-		if(score == 0 && timer < 0 && timer > -2000) DrawText(TextFormat("Wawe: %i", (MAX_ASTEROIDS_SIZE / 3) - 1), 300, 330, 50, WHITE);
+		if(score == 0 && timer < 0 && timer > -1.2) DrawText(TextFormat("Wawe: %i", (MAX_ASTEROIDS_SIZE / 3) - 1), 300, 330, 50, WHITE);
 
 		//------------  Drawing  ----------//
 		BeginDrawing();
@@ -87,6 +87,7 @@ int main(void){
 
 		//DrawFPS(30,30);
 		timer += GetFrameTime(); ///timer
+
 		//-----	-------  End Drawing ------//
 		ClearBackground(BLACK);
 		EndDrawing();				
