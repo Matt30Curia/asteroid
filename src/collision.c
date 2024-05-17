@@ -43,6 +43,7 @@ int collide(SpaceShip* spaceship, AsteroidContainer* asteroidContainer) {
             if (asteroid[i].ray == SMALL) {
 
                 destroyAsteroid(&asteroid[i]);
+                return 10;
 
             }
             else

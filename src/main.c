@@ -8,14 +8,18 @@
 #define screenHeight 800
 #define screenWidth  800
 
-int MAX_ASTEROIDS_SIZE =  3; //at the end there are 4 times small asteroids
+int INITIAL_ASTEROIDS_SIZE =  3; //at the end there are 4 times small asteroids
 #define SPACE_SHIP_RAY 30
 
 typedef struct {
 	int menu;
 	int wawe;
+	int currScore;
+	int score;
 
 } GameState;
+
+void updateMenu(GameState* state,AsteroidContainer* asteroidsContainer,SpaceShip* ship);
 
 int main(void){
 
@@ -23,7 +27,7 @@ int main(void){
 	InitWindow(screenHeight, screenWidth, "Asteroid");
 	InitAudioDevice();
 
-	AsteroidContainer *asteroidsContainer = createAsteroids(MAX_ASTEROIDS_SIZE);
+	AsteroidContainer *asteroidsContainer = createAsteroids(INITIAL_ASTEROIDS_SIZE);
 	
 	SpaceShip *ship = (SpaceShip*)malloc(sizeof(Asteroid*));
 
@@ -33,10 +37,7 @@ int main(void){
 	        SPACE_SHIP_RAY
 	);
 	
-	int score = 0;
-	int currScore = 0;
-	double timer = 1;
-	GameState state = { 1, 1 };
+	GameState state = { 1, 1, 0, 0 };
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	
@@ -44,49 +45,15 @@ int main(void){
 	// Main game loop
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
-		currScore = collide(ship, asteroidsContainer);
+		state.currScore = collide(ship, asteroidsContainer);
 		updateAsteroids(asteroidsContainer);
-		if(state.menu){
-			DrawText("Asteroid", 240, 330, 70, WHITE);
-			DrawText("press C to start", 300, 400, 20, WHITE);
-			if(IsKeyPressed(KEY_C)) state.menu = 0;
-		}
-		//-------------  Update  -----------//
-		else if(score >=  MAX_ASTEROIDS_SIZE /** 3 */* 10){
-			timer = -1.2;
-			MAX_ASTEROIDS_SIZE += 3;
-			freeAsteroids(asteroidsContainer);
-			asteroidsContainer = createAsteroids(MAX_ASTEROIDS_SIZE);
-
-			score = 0;
-
-		}
-		else if(currScore <= -1 || score < 0){
-			DrawText("Game over", 200, 330, 70, WHITE);
-			DrawText("press C to restart", 280, 400, 20, WHITE);
-			score = -1;
-			if(IsKeyPressed(KEY_C)){
-				MAX_ASTEROIDS_SIZE = 3;
-				freeAsteroids(asteroidsContainer);
-				asteroidsContainer = createAsteroids(MAX_ASTEROIDS_SIZE);
-
-				score = 0;
-			}
-		}
-		else{
-			score += currScore;
-			DrawText(TextFormat("score: %04i", score), 30, 30, 20, WHITE);
-			updateSpaceShip(ship);
-			drawSpaceShip(ship);
-		}
-		if(score == 0 && timer < 0 && timer > -1.2) DrawText(TextFormat("Wawe: %i", (MAX_ASTEROIDS_SIZE / 3) - 1), 300, 330, 50, WHITE);
-
+		updateMenu(&state, asteroidsContainer, ship);
 		//------------  Drawing  ----------//
 		BeginDrawing();
 		drawAsteroids(asteroidsContainer);
 
 		//DrawFPS(30,30);
-		timer += GetFrameTime(); ///timer
+
 
 		//-----	-------  End Drawing ------//
 		ClearBackground(BLACK);
@@ -104,3 +71,42 @@ int main(void){
 }
 
 
+void updateMenu(GameState* state,AsteroidContainer* asteroidsContainer,SpaceShip* ship){
+	static double timer = 1;
+
+	if(state->menu){
+			DrawText("Asteroid", 240, 330, 70, WHITE);
+			DrawText("press C to start", 300, 400, 20, WHITE);
+			if(IsKeyPressed(KEY_C)) state->menu = 0;
+		}
+		//-------------  Update  -----------//
+		else if(state->score >= INITIAL_ASTEROIDS_SIZE * 30 ){
+			timer = -1.2;
+			INITIAL_ASTEROIDS_SIZE += 3;
+			freeAsteroids(asteroidsContainer);
+			asteroidsContainer = createAsteroids(INITIAL_ASTEROIDS_SIZE);
+			state->wawe++;
+			state->score = 0;
+
+		}
+		else if(state->currScore <= -1 || state->score < 0){
+			DrawText("Game over", 200, 330, 70, WHITE);
+			DrawText("press C to restart", 280, 400, 20, WHITE);
+			state->score = -1;
+			if(IsKeyPressed(KEY_C)){
+				INITIAL_ASTEROIDS_SIZE = 3;
+				freeAsteroids(asteroidsContainer);
+				asteroidsContainer = createAsteroids(INITIAL_ASTEROIDS_SIZE);
+
+				state->score = 0;
+			}
+		}
+		else{
+			state->score += state->currScore;
+			DrawText(TextFormat("score: %i", state->score), 30, 30, 20, WHITE);
+			updateSpaceShip(ship);
+			drawSpaceShip(ship);
+		}
+		if(state->score == 0 && timer < 0 && timer > -1.2) DrawText(TextFormat("Wawe: %i", state->wawe), 300, 330, 50, WHITE);
+		timer += GetFrameTime(); ///timer
+}

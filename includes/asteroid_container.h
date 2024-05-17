@@ -6,7 +6,7 @@
 
 #define SCREEN_HEIGHT 800
 #define SCREEN_WIDHT 800
-#define ZERO_OFFSET 300
+#define ZERO_OFFSET 200
 
 #define VELOCITY_ASTEROID 3
 

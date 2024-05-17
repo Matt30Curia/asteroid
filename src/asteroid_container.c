@@ -119,9 +119,9 @@ void updateAsteroids(AsteroidContainer* asteroidContainer) {
             // Aggiorna le coordinate dei punti dell'asteroide
             asteroids[i].edges[j] = Vector2Add(direction, asteroids[i].edges[j]);
         }
-        // DrawCircleLinesV(asteroids[i].position, asteroids[i].ray, WHITE );!!!!!!!!!!!!!
+
         // Verifica se l'asteroide è uscito dai bordi della schermata
-        if (asteroids[i].edges[EDGES_SIZE - 1].x > SCREEN_WIDHT  + ZERO_OFFSET ||
+        /*if (asteroids[i].edges[EDGES_SIZE - 1].x > SCREEN_WIDHT  + ZERO_OFFSET ||
             asteroids[i].edges[EDGES_SIZE - 1].x < -ZERO_OFFSET ||
             asteroids[i].edges[EDGES_SIZE - 1].y > SCREEN_HEIGHT + ZERO_OFFSET ||
             asteroids[i].edges[EDGES_SIZE - 1].y < -ZERO_OFFSET) {
@@ -134,6 +134,34 @@ void updateAsteroids(AsteroidContainer* asteroidContainer) {
 
             asteroids[i].position = newPosition;
             asteroids[i].direction = Vector2Scale(sideFuncs[side].directionFunc(), VELOCITY_ASTEROID);
+        }*/
+        if (asteroids[i].edges[EDGES_SIZE - 1].x > SCREEN_WIDHT  + ZERO_OFFSET){
+
+            Vector2 newPosition = {-ZERO_OFFSET, asteroids[i].position.y};
+            resetEdges(&asteroids[i], asteroids[i].position, newPosition);
+
+            asteroids[i].position = newPosition;
+            asteroids[i].direction = Vector2Scale(sideFuncs[GetRandomValue(0, 3)].directionFunc(), VELOCITY_ASTEROID);
+        }
+        if (asteroids[i].edges[EDGES_SIZE - 1].x < -ZERO_OFFSET ){
+            Vector2 newPosition = {SCREEN_HEIGHT + ZERO_OFFSET, asteroids[i].position.y};
+            resetEdges(&asteroids[i], asteroids[i].position, newPosition);
+
+            asteroids[i].position = newPosition;
+            asteroids[i].direction = Vector2Scale(sideFuncs[GetRandomValue(0, 3)].directionFunc(), VELOCITY_ASTEROID);
+        }
+        if (asteroids[i].edges[EDGES_SIZE - 1].y > SCREEN_HEIGHT + ZERO_OFFSET){
+            Vector2 newPosition = {asteroids[i].position.x,  -ZERO_OFFSET};
+            resetEdges(&asteroids[i], asteroids[i].position, newPosition);
+
+            asteroids[i].position = newPosition;
+            asteroids[i].direction = Vector2Scale(sideFuncs[GetRandomValue(0, 3)].directionFunc(), VELOCITY_ASTEROID);
+        }
+        if (asteroids[i].edges[EDGES_SIZE - 1].y < -ZERO_OFFSET){
+            Vector2 newPosition = {asteroids[i].position.x,  SCREEN_HEIGHT + ZERO_OFFSET};
+            resetEdges(&asteroids[i], asteroids[i].position, newPosition);
+            asteroids[i].position = newPosition;
+            asteroids[i].direction = Vector2Scale(sideFuncs[GetRandomValue(0, 3)].directionFunc(), VELOCITY_ASTEROID);
         }
 
 
