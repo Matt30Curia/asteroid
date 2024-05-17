@@ -4,7 +4,7 @@ CPACKAGE = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 OBJS = obj/asteroid.o obj/main.o obj/bullet.o obj/asteroid_container.o obj/spaceship.o obj/collision.o
 SRCS = src/main.c src/bullet.c src/asteroid.c src/asteroid_container.c src/spaceship.c src/collision.c
 WFLAG = -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces -Wunused-result -Os -I. -I
-RAYLIB_PATH = ""
+RAYLIB_PATH = "/home/user/Scrivania/raylib"
 BIN = asteroid
 
 

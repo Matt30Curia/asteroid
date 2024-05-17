@@ -80,7 +80,7 @@ void updateMenu(GameState* state,AsteroidContainer* asteroidsContainer,SpaceShip
 			if(IsKeyPressed(KEY_C)) state->menu = 0;
 		}
 		//-------------  Update  -----------//
-		else if(state->score >= INITIAL_ASTEROIDS_SIZE * 30 ){
+		else if(state->score >= INITIAL_ASTEROIDS_SIZE * 70 ){
 			timer = -1.2;
 			INITIAL_ASTEROIDS_SIZE += 3;
 			freeAsteroids(asteroidsContainer);
