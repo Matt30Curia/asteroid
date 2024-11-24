@@ -1,9 +1,8 @@
-CC = cc
+CC = gcc
 CFLAG = -Wall
-CPACKAGE = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+CPACKAGE = `pkg-config --libs --cflags raylib`
 OBJS = obj/asteroid.o obj/main.o obj/bullet.o obj/asteroid_container.o obj/spaceship.o obj/collision.o
-SRCS = src/main.c src/bullet.c src/asteroid.c src/asteroid_container.c src/spaceship.c src/collision.c
-WFLAG = -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces -Wunused-result -Os -I. -I
+SRCS = src/*.c
 RAYLIB_PATH = "/home/user/Scrivania/raylib"
 BIN = asteroid
 
@@ -11,10 +10,10 @@ BIN = asteroid
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) $(CFLAG) $(CPACKAGE) -o $(BIN) $(OBJS)
+	$(CC)  $(CPACKAGE) -o $(BIN) $(OBJS)
 
 obj/%.o: src/%.c
-	$(CC) $(CFLAG) -c $< -o $@
+	$(CC) -g  $(CPACKAGE) -c $< -o $@
 
 html:
 	emcc -o web/$(BIN).html $(SRCS) $(WFLAG) $(RAYLIB_PATH)/src -I $(RAYLIB_PATH)/src/external -L. -L $(RAYLIB_PATH)/src -s USE_GLFW=3 -s ASYNCIFY --preload-file asset web/libraylib.a

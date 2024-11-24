@@ -24,9 +24,6 @@ SideSpawnFuncs sideFuncs[] = {
 };
 
 
-
-
-
 AsteroidContainer* createAsteroids(size_t size){
 
     Vector2 direction;
@@ -62,6 +59,39 @@ AsteroidContainer* createAsteroids(size_t size){
 	containerTmp->current_index = size;
 
     return containerTmp;
+}
+
+
+void reallocAsteroids(AsteroidContainer* asteroidContainer, size_t size){
+
+    Vector2 direction;
+    Vector2 position;
+    size_t max_size = size * 5;
+    Asteroid* asteroids = (Asteroid*)realloc(asteroidContainer->asteroids, max_size* sizeof(Asteroid));
+
+    // Check if memory allocation was successful
+    if (asteroids == NULL) {
+        printf("Memory allocation failed from createAsteroids\n");
+    }
+
+	int side; //give the screen size for asteroid spawn
+
+    for (int i = 0; i < max_size; i++) {
+
+        side = GetRandomValue(0, 3);
+        position  = sideFuncs[side].positionFunc();
+        direction = sideFuncs[side].directionFunc();
+
+        if (i < size)
+            asteroids[i] = *initAsteroid(position, Vector2Scale(direction, VELOCITY_ASTEROID), LARGE, false);
+        else
+            asteroids[i] = *initAsteroid(position, Vector2Scale(direction, VELOCITY_ASTEROID), LARGE, true);
+
+    }
+
+	asteroidContainer->asteroids = asteroids;
+	asteroidContainer->max_size = max_size;
+	asteroidContainer->current_index = size;
 }
 
 int divideAsteroid(AsteroidContainer* asteroidContainer, int collider) {
@@ -190,5 +220,6 @@ void drawAsteroids(AsteroidContainer* asteroidContainer)
 
 void freeAsteroids(AsteroidContainer* asteroids) {
 
+    free(asteroids->asteroids);
     free(asteroids);
 }
