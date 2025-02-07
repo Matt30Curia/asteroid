@@ -8,7 +8,7 @@
 #define screenHeight 800
 #define screenWidth  800
 
-int INITIAL_ASTEROIDS_SIZE =  3; //at the end there are 4 times small asteroids
+int INITIAL_ASTEROIDS_SIZE =  5; //at the end there are 4 times small asteroids
 #define SPACE_SHIP_RAY 30
 
 typedef struct {
